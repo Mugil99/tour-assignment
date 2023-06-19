@@ -43,6 +43,7 @@ const TourList=(props)=>{
     const [showMore,setShowMore]=useState(false)
     const[data,setData]=useState(details)
     // const[refresh,setRefresh]=useState(false)
+    const[indx,setIndx]=useState(null);
     function handleDelete(index){
         if(data.length!=0){
             var arr=[...data];
@@ -53,6 +54,10 @@ const TourList=(props)=>{
     function handleRefresh(){
         window.location.reload();
     }
+    function handleShowMore(index){
+           setIndx(index);
+           setShowMore(true);
+    }
     return(
        <div>
         {
@@ -62,12 +67,12 @@ const TourList=(props)=>{
                     <h1>{tour.name}</h1>
                     <img src={tour.image}/>
                     {
-                        (showMore)?(<div>
+                        (showMore&&index===indx)?(<div>
                             <p>{tour.info}</p>
                             <strong>$ {tour.price}</strong>
                             <button onClick={()=>setShowMore(false)}>See Less</button>
                         </div>):(<div>
-                            <button onClick={()=>setShowMore(true)}>Show More</button>
+                            <button onClick={()=>handleShowMore(index)}>Show More</button>
                         </div>)
                     }
                     <button onClick={()=>handleDelete(index)}>Delete</button>
